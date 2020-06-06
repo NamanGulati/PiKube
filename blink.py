@@ -11,16 +11,16 @@ led = LED(17)
 
 def blink(led):
     t = threading.currentThread()
-    while getattr(t, "run", True):
+    while getattr(t, "run_b", True):
         if getattr(t, "blink", False):
             led.on()
-            sleep(1)
+            sleep(0.5)
             led.off()
-            sleep(1)
+            sleep(0.5)
 
 
 proc = threading.Thread(target=blink,args=(led,))
-proc.run = True
+proc.run_b = True
 proc.blink = False
 proc.start()
 
@@ -40,5 +40,6 @@ def ledOff():
 
 app.run(host='0.0.0.0')
 
-proc.run = False
+proc.run_b = False
 proc.join(3)
+led.off()

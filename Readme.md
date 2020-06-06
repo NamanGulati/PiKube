@@ -16,10 +16,12 @@ kubectl create secret generic regcred \
 ```
 
 ## Set up raspberry pi node:
-on master: `     `
 
 on node: `sudo kubeadm join [your unique string from the kubeadm init command]`
-`
+
+## Label Node
+
+label node as RaspberryPi: `kubectl label nodes raspberrypi4 raspberrypi=4 --overwrite`
 ## Set up dashboard
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
