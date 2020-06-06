@@ -4,13 +4,8 @@ WORKDIR /usr/src/app
 
 COPY blink.py ./
 
-RUN pip install gpiozero
-
-RUN pip install flask
-
-EXPOSE 5000
+RUN pip install gpiozero flask
 
 RUN chmod +x ./blink.py
 
 CMD ["python","./blink.py"]
-
