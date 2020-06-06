@@ -43,8 +43,8 @@ spec:
             privileged: true
           ports:
             - containerPort: 5000
-      imagePullSecrets:
-        - name: <registy authentication credential>
+      #imagePullSecrets:
+      #  - name: <registy authentication credential>
 ---
 apiVersion: v1
 kind: Service
@@ -54,7 +54,7 @@ metadata:
   name: pigpio-service
 spec:
   ports:
-    - nodePort: 30000
+    - nodePort: 30000 #expose pod at nodeIP:30000
       port: 5000
       protocol: TCP
       targetPort: 5000
