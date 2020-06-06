@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pigpio-deployment
+  labels:
+    app: pigpio
+spec:
+  selector:
+    matchLabels:
+      app: pigpio
+  template:
+    metadata:
+      labels:
+        app: pigpio
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:   #only allow scheduling of pods onto nodes labeled as raspberrypi
+                  - key: raspberrypi
+                    operator: In
+                    values:
+                      - "3"
+                      - "4"
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:   #prevent replicasets from scheduling on same node
+              - key: app
+                operator: In
+                values:
+                - pigpio
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: pigpio
+          image: <image name from registry>
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 5000
+      imagePullSecrets:
+        - name: <registy authentication credential>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pigpio
+  name: pigpio-service
+spec:
+  ports:
+    - nodePort: 30000
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: pigpio #select pods to apply to
+  type: NodePort
