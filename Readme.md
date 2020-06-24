@@ -1,3 +1,6 @@
+# A Kubernetes Tepmplate for Scaling Hardware I/O Applications on a Raspberry Pi
+[Full Details](https://medium.com/@naman.gulati00/making-iot-projects-scalable-with-kubernetes-a-raspberry-pi-tutorial-b2572c81bfaf)
+
 # Handy commands
 ## Set up control plane:
 ```
